@@ -125,6 +125,19 @@ import { renderpaymentSummary } from './paymentSummary.js';
       return deliveryHTML;
     }
 
+
+  // update the available quantity in checkout page
+   function diplayCartQuantity() {
+      let cartQuantity = 0;
+      cart.forEach((cartItem) => {
+          cartQuantity += cartItem.quantity;
+      });
+      document.querySelector('.return-to-home-link')
+      .innerHTML = cartQuantity + ' items'; 
+    }
+    diplayCartQuantity();
+
+
     document.querySelector('.js-order-summary')
     .innerHTML = cartSummaryHTML;
 
@@ -134,6 +147,7 @@ import { renderpaymentSummary } from './paymentSummary.js';
       link.addEventListener('click', () => {
       const productId = link.dataset.productId;
       removeFromCart(productId);
+      diplayCartQuantity();
 
       const container = document.querySelector(`.js-cart-item-container-${productId}`);
       container.remove();
@@ -153,5 +167,8 @@ import { renderpaymentSummary } from './paymentSummary.js';
         renderpaymentSummary(); // to refresh the payment section authomatically
       });
     } );
-  }  
+  } 
+  
+  
+ 
 

@@ -3,6 +3,7 @@ import {cart, addToCart} from '../data/cart.js';
 import { formatCurrency } from './utils/moneny.js';
 
 
+
 loadProductsFetch();
 
 export function renderProductsGrid() {
@@ -82,6 +83,7 @@ export function renderProductsGrid() {
 			document.querySelector('.js-cart-quantity')
 			.innerHTML = cartQuantity; 
 	}
+	updateCartQuantity();
 
 	document.querySelectorAll('.js-add-to-cart')
 	.forEach((button) => {
@@ -89,9 +91,12 @@ export function renderProductsGrid() {
 			const productId = button.dataset.productId;
 			addToCart(productId);
 			updateCartQuantity();
+			//diplayCartQuantity();
 	});
 	});
 
+
+	// Display feadback whe added items
 	document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 		button.addEventListener('click', () => {
 			const productId1 = button.dataset.productId;
