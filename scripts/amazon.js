@@ -52,9 +52,8 @@ export function renderProductsGrid() {
 
 					<div class="product-spacer"></div>
 
-					<div class="added-to-cart">
-						<img src="images/icons/checkmark.png">
-						Added
+					<div class="added-to-cart" data-product-id = "${product.id}">
+						
 					</div>
 
 					<button class="add-to-cart-button button-primary
@@ -65,6 +64,13 @@ export function renderProductsGrid() {
 				</div>
 			`;
 	});
+
+	const addFeadback = `
+		<img src="images/icons/checkmark.png">
+		Added
+	`;
+
+
 	//console.log(productHTML);
 	document.querySelector('.js-products-grid').innerHTML = productHTML;
 
@@ -85,4 +91,25 @@ export function renderProductsGrid() {
 			updateCartQuantity();
 	});
 	});
+
+	document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+		button.addEventListener('click', () => {
+			const productId1 = button.dataset.productId;
+      document.querySelectorAll('.added-to-cart').forEach((button) => {
+				  const productId2 = button.dataset.productId;
+					if (productId2 === productId1) {
+						button.innerHTML = addFeadback;
+					}
+			  });
+			 setTimeout(() => {
+				document.querySelectorAll('.added-to-cart').forEach((button) => {
+				  const productId2 = button.dataset.productId;
+					if (productId2 === productId1) {
+						button.innerHTML = '';
+					}
+			  });
+			}, 3000); 
+  });	
+	});	
+
 }
