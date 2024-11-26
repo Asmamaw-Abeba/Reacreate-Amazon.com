@@ -8,14 +8,19 @@ import {loadCart } from "../data/cart.js";
 
 // Async Await Example for waiting
 async function loadPage() {
+  try{ // error handling in async await
+    // throw 'error1'; // manually create an error
+    await loadProductsFetch(); // wait to finish
 
-  await loadProductsFetch(); // wait to finish
-
-  await new Promise((resolve) => { 
-    loadCart(() => {
-      resolve();
+    await new Promise((resolve) => { 
+      loadCart(() => {
+        resolve();
+      });
     });
-  });
+
+  } catch(error) { // error handling in async await
+    console.log('unexpected error, please try again.');
+  }
 
   renderOrderSummary();
   renderpaymentSummary();
