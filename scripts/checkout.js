@@ -6,38 +6,40 @@ import {loadCart } from "../data/cart.js";
 //import '../data/backend-practice.js';
 
 
-// Async Await Example
+// Async Await Example for waiting
 async function loadPage() {
-  console.log('load page');
-}
-loadPage().then(() => {
-  console.log('next step');
-})
 
-// use  promise for waiting
-Promise.all([
-  loadProductsFetch(),
-  new Promise((resolve) => { 
+  await loadProductsFetch(); // wait to finish
+
+  await new Promise((resolve) => { 
     loadCart(() => {
       resolve();
     });
-  })
+  });
 
-]).then((values) => {
-  console.log(values);
   renderOrderSummary();
   renderpaymentSummary();
-});
+
+}
+loadPage();
 
 
-// new Promise((resolve) => { 
-//   loadProducts(() => {
-//     resolve();
-//   });
-// }).then(() => {
+// // use  promise for waiting
+// Promise.all([
+//   loadProductsFetch(),
+//   new Promise((resolve) => { 
+//     loadCart(() => {
+//       resolve();
+//     });
+//   })
+
+// ]).then((values) => {
+//   console.log(values);
 //   renderOrderSummary();
 //   renderpaymentSummary();
 // });
+
+
 
 /*
 loadProducts(() => {
