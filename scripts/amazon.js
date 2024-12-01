@@ -76,12 +76,12 @@ export function renderProductsGrid() {
 	document.querySelector('.js-products-grid').innerHTML = productHTML;
 
 	function updateCartQuantity() {
-			let cartQuantity = 0;
-			cart.forEach((cartItem) => {
-					cartQuantity += cartItem.quantity;
-			});
-			document.querySelector('.js-cart-quantity')
-			.innerHTML = cartQuantity; 
+		let cartQuantity = 0;
+		cart.forEach((cartItem) => {
+				cartQuantity += cartItem.quantity;
+		});
+		document.querySelector('.js-cart-quantity')
+		.innerHTML = cartQuantity; 
 	}
 	updateCartQuantity();
 
@@ -118,3 +118,4 @@ export function renderProductsGrid() {
 	});	
 
 }
+

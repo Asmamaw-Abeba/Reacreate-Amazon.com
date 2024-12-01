@@ -5,9 +5,9 @@ import { formatCurrency } from "../utils/moneny.js";
 import { addOrder } from "../../data/orders.js";
 
 
-  export function renderpaymentSummary () {
-    let productPriceCents = 0;
-    let shippingPriceCents = 0;
+export function renderpaymentSummary () {
+  let productPriceCents = 0;
+  let shippingPriceCents = 0;
 
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
@@ -23,8 +23,9 @@ import { addOrder } from "../../data/orders.js";
 
   const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
   const taxCents = totalBeforeTaxCents * 0.1;
+  
   const totalCents = totalBeforeTaxCents + taxCents;
- 
+
   const paymentSummartyHTML = `
     <div class="payment-summary-title">
       Order Summary
@@ -73,6 +74,7 @@ import { addOrder } from "../../data/orders.js";
   document.querySelector('.js-payment-summary')
   .innerHTML = paymentSummartyHTML;
 
+  // Here for place order button
   document.querySelector('.js-place-order')
    .addEventListener('click', async() => {
     try {
@@ -94,6 +96,7 @@ import { addOrder } from "../../data/orders.js";
     }
      
     window.location.href = 'orders.html'; // change the url to orders.html page
+    console.log(totalCents);
 
    });
 }

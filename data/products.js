@@ -4,7 +4,7 @@ import { renderProductsGrid } from "../scripts/amazon.js";
 export function getProductDetail(productId) {
   let matchingProduct;
 
-  products.forEach((product) => {
+   products.forEach((product) => {
     if (product.id === productId) {
       matchingProduct = product;
     }
@@ -91,9 +91,9 @@ export function loadProductsFetch() {
 }
 
 
-// loadProductsFetch().then(() => {
-//   renderProductsGrid();
-// });
+loadProductsFetch().then(() => {
+  renderProductsGrid();
+});
 
 
 
