@@ -3,9 +3,11 @@ import {products, getProductDetail} from '../../data/products.js';
 import { formatCurrency} from '../utils/moneny.js';
 //import { removeFromCart} from '../data/cart.js';
 
-// the bleow syntax is called default export we can use it only want to 
-// export one thing from that file
-// e.g export default dayjs;
+/*
+  the bleow syntax is called default export we can use it only want to 
+  export one thing from that file
+  e.g export default dayjs;
+*/
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryoptions.js';
 import { renderpaymentSummary } from './paymentSummary.js';
@@ -24,8 +26,8 @@ import { renderpaymentSummary } from './paymentSummary.js';
       const matchingProduct = getProductDetail(productId);
       // To check the existance
       if (!matchingProduct || !matchingProduct.id) {
-            console.error('Matching product or ID is undefined:', matchingProduct);
-            return; // Exit the loop if there's an issue
+          console.error('Matching product or ID is undefined:', matchingProduct);
+          return; // Exit the loop if there's an issue
         }
 
       const deliveyOptionId = cartItem.deliveryOptionId;

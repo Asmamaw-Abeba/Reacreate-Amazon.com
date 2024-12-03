@@ -1,3 +1,5 @@
+import { getProductDetail } from "./products.js";
+
 export const orders = JSON.parse(localStorage.getItem('orders')) || [];
 // console.log(orders);
 export function addOrder(order) {
@@ -14,6 +16,6 @@ export function getOrderedProducts(params) {
   orders.forEach(orderItem => {
     products = orderItem.products;
   });
- return products;
+  return products;
 }
 //getOrderedProducts();
