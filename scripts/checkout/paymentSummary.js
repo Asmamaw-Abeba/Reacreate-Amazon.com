@@ -96,7 +96,7 @@ export function renderpaymentSummary () {
     }
      
     window.location.href = 'orders.html'; // change the url to orders.html page
-    console.log(totalCents);
+    //console.log(totalCents);
 
    });
 }

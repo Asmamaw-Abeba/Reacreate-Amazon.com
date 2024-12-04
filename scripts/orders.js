@@ -11,19 +11,19 @@ import { formatCurrency } from "./utils/moneny.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 
-// order time
-let orderTime; // Define the order time outside the function to make it persistent
+let orderTime = localStorage.getItem('orderTime'); // Retrieve order time from localStorage
 
 export function returnOrderTime() {
   if (!orderTime) {
     // If orderTime is not set, set it to the current time
     const today = dayjs();
     orderTime = today.format('dddd, MMMM D');
+    localStorage.setItem('orderTime', orderTime); // Store order time in localStorage
   }
 
-  //console.log(orderTime); // Output the constant order time
   return orderTime;
 }
+
 // Call the function to get the constant order time
 returnOrderTime();
 
@@ -62,23 +62,59 @@ async function loadOrderPage() {
 
     let productsDetails = '';
     
+    // Retrieve dateString, counter, floatDay, and now from localStorage if available
+    let dateString = localStorage.getItem('deliveryDateString');
+    let counter = parseInt(localStorage.getItem('counter')) || 0;
+    let floatDay = parseInt(localStorage.getItem('floatDay')) || 0;
+    let now = parseInt(localStorage.getItem('now')) || 0;
+    
     cart.forEach((cartItem) => {
       const productId = cartItem.productId;
-
-      //getting product details
-      const matchingProduct = getProductDetail(productId);
-      // To check the existance
-      if (!matchingProduct || !matchingProduct.id) {
-          console.error('Matching product or ID is undefined:', matchingProduct);
-          return; // Exit the loop if there's an issue
-      }
-      const deliveyOptionId = cartItem.deliveryOptionId;
     
-      const deliveryOption = getDeliveryOption(deliveyOptionId);
+      // Getting product details
+      const matchingProduct = getProductDetail(productId);
+    
+      // Check if matchingProduct or its ID is undefined
+      if (!matchingProduct || !matchingProduct.id) {
+        console.error('Matching product or ID is undefined:', matchingProduct);
+        return; // Exit the loop if there's an issue
+      }
+    
+      const deliveryOptionId = cartItem.deliveryOptionId;
+      const deliveryOption = getDeliveryOption(deliveryOptionId);
     
       const today = dayjs();
-      const deliveryDate = today.add(deliveryOption.deliveryDate, 'days');
-      const dateString = deliveryDate.format('dddd, MMMM D');
+      
+      let deliveryDate;
+      
+      if (floatDay === now + 1) {
+        now++;
+        counter++;
+        deliveryDate = today.add(deliveryOption.deliveryDate - counter, 'days');
+      } else {
+        deliveryDate = today.add(deliveryOption.deliveryDate, 'days');
+        counter = 0;
+        floatDay = today.format('D');
+        now = parseInt(dayjs(returnOrderTime()).format('D'));
+      }
+    
+      // Update dateString, counter, floatDay, and now
+      dateString = deliveryDate.format('dddd, MMMM D');
+      localStorage.setItem('deliveryDateString', dateString);
+      localStorage.setItem('counter', counter);
+      localStorage.setItem('floatDay', floatDay);
+      localStorage.setItem('now', now);
+   
+    
+      // Use the updated variables and dateString in your code as needed
+      console.log(dateString);
+      console.log(counter);
+      console.log(floatDay);
+      console.log(now);
+       
+
+      // Use the dateString in your code as needed
+
 
       productsDetails += `
         <div class="order-details-grid">

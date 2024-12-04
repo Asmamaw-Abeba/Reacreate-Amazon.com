@@ -14,6 +14,12 @@ const url = new URL(window.location.href);
 async function loadTrackingPage() {
   await loadProductsFetch();
 
+  // Retrieve dateString, counter, floatDay, and now from localStorage if available
+  let dateString = localStorage.getItem('deliveryDateString');
+  let counter = parseInt(localStorage.getItem('counter')) || 0;
+  let floatDay = parseInt(localStorage.getItem('floatDay')) || 0;
+  let now = parseInt(localStorage.getItem('now')) || 0;
+
   cart.forEach((cartItem) => {
     const productId = url.searchParams.get('productId');
     const quantity = url.searchParams.get('Quantity');
@@ -27,12 +33,38 @@ async function loadTrackingPage() {
     
     const today = dayjs();
 
+    let deliveryDate;
+
     if(cartItem.productId == productId) {
 
       const deliveyOptionId = cartItem.deliveryOptionId; 
       const deliveryOption = getDeliveryOption(deliveyOptionId);
-      const deliveryDate = today.add(deliveryOption.deliveryDate, 'days');
-      const dateString = dayjs(deliveryDate).format('dddd, MMMM D');
+      if (floatDay === now + 1) {
+        now++;
+        counter++;
+        deliveryDate = today.add(deliveryOption.deliveryDate - counter, 'days');
+      } else {
+        deliveryDate = today.add(deliveryOption.deliveryDate, 'days');
+        counter = 0;
+        floatDay = today.format('D');
+        now = parseInt(dayjs(returnOrderTime()).format('D'));
+      }
+      // Update dateString, counter, floatDay, and now
+      dateString = deliveryDate.format('dddd, MMMM D');
+      localStorage.setItem('deliveryDateString', dateString);
+      localStorage.setItem('counter', counter);
+      localStorage.setItem('floatDay', floatDay);
+      localStorage.setItem('now', now);
+  
+    
+      // Use the updated variables and dateString in your code as needed
+      console.log(dateString);
+      console.log(counter);
+      console.log(floatDay);
+      console.log(now);
+          
+      // const deliveryDate = today.add(deliveryOption.deliveryDate, 'days');
+      // const dateString = dayjs(deliveryDate).format('dddd, MMMM D');
       
       //below is fo calculating on progress bar in percent 
       const currentTime = today.format('D');

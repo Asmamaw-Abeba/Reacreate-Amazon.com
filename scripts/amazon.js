@@ -119,3 +119,46 @@ export function renderProductsGrid() {
 
 }
 
+// search products from home page
+// document.querySelector('.search-button')
+//   .addEventListener('click', () => {
+// 		const searchValue = document.querySelector('.search-bar').value;
+
+// 		window.location.href = `index.html?search=${searchValue}`; // change the url to index.html page
+
+// 	});
+
+	// const url = new URL(window.location.href);
+	// const searchValue = url.searchParams.get('search');
+	// console.log(searchValue);
+
+	// document.addEventListener('DOMContentLoaded', () => {
+	// 	const urlParams = new URLSearchParams(window.location.search);
+	// 	const searchValue = urlParams.get('search');
+		
+	// 	document.querySelector('.search-bar').value = searchValue || '';
+	
+	// 	document.querySelector('.search-button').addEventListener('click', () => {
+	// 		const searchValue = document.querySelector('.search-bar').value;
+			
+	// 		document.querySelectorAll('.js-products-grid').forEach(product => {
+	// 			const productName = product.dataset.name;
+	// 			if (productName && productName.includes(searchValue)) {
+	// 				product.style.display = 'block';
+	// 			} else {
+	// 				product.style.display = 'none';
+	// 			}
+	// 		});
+	// 	});
+	
+	// 	// Initial filter based on the search query parameter
+	// 	if (searchValue) {
+	// 		document.querySelectorAll('.js-products-grid').forEach(product => {
+	// 			const productName = product.dataset.name;
+	// 			if (productName && !productName.includes(searchValue)) {
+	// 				product.style.display = 'none';
+	// 			}
+	// 		});
+	// 	}
+	// });
+
