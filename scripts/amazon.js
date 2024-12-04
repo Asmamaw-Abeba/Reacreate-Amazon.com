@@ -100,65 +100,116 @@ export function renderProductsGrid() {
 	document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 		button.addEventListener('click', () => {
 			const productId1 = button.dataset.productId;
-      document.querySelectorAll('.added-to-cart').forEach((button) => {
-				  const productId2 = button.dataset.productId;
-					if (productId2 === productId1) {
-						button.innerHTML = addFeadback;
-					}
-			  });
-			 setTimeout(() => {
+			document.querySelectorAll('.added-to-cart').forEach((button) => {
+				const productId2 = button.dataset.productId;
+				if (productId2 === productId1) {
+					button.innerHTML = addFeadback;
+				}
+			});
+			setTimeout(() => {
 				document.querySelectorAll('.added-to-cart').forEach((button) => {
-				  const productId2 = button.dataset.productId;
+					const productId2 = button.dataset.productId;
 					if (productId2 === productId1) {
 						button.innerHTML = '';
 					}
-			  });
+				});
 			}, 3000); 
-  });	
+		});	
 	});	
 
 }
 
-// search products from home page
-// document.querySelector('.search-button')
-//   .addEventListener('click', () => {
-// 		const searchValue = document.querySelector('.search-bar').value;
 
-// 		window.location.href = `index.html?search=${searchValue}`; // change the url to index.html page
+// search products from home page or filtering products instead of finding manually
 
-// 	});
+async function filterProducts(searchValue) {
+  let productsGrid = document.querySelectorAll('.product-container');
+  productsGrid = Array.from(productsGrid); // Convert NodeList to an array
+  let productsFound = false;
 
-	// const url = new URL(window.location.href);
-	// const searchValue = url.searchParams.get('search');
-	// console.log(searchValue);
+  productsGrid.forEach(product => {
+    const productName = product.querySelector('.product-name').textContent.toLowerCase();
+    if (productName.includes(searchValue.toLowerCase())) {
+      product.style.display = 'block';
+      productsFound = true;
+      // console.log('found');
+    } else {
+      product.style.display = 'none';
+    }
+  });
 
-	// document.addEventListener('DOMContentLoaded', () => {
-	// 	const urlParams = new URLSearchParams(window.location.search);
-	// 	const searchValue = urlParams.get('search');
-		
-	// 	document.querySelector('.search-bar').value = searchValue || '';
+  const noResultsMessage = document.getElementById('no-results-message');
+
+  if (!productsFound) {
+    // If no products match the search, display a message to the user
+    if (!noResultsMessage) {
+      const newNoResultsMessage = document.createElement('div');
+      newNoResultsMessage.textContent = 'No products found.';
+      newNoResultsMessage.id = 'no-results-message';
+      document.querySelector('.js-products-grid').appendChild(newNoResultsMessage);
+    }
+  } else {
+    // Remove the message if products are found
+    if (noResultsMessage) {
+      noResultsMessage.remove();
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const url = new URL(window.location.href);
+  const searchValue = url.searchParams.get('search');
+
+	const searchInput = document.querySelector('.search-bar');
+  // Check if searchInput exists before setting its value
+  if (searchInput) {
+    searchInput.value = searchValue !== null ? searchValue : '';
+  }
+
+  // Filter products on search input change
+  searchInput.addEventListener('input', () => {
+    const searchValue = searchInput.value.trim();//The .trim() method in JavaScript is used to remove whitespace from both ends of a string.
+    filterProducts(searchValue);
+    //window.history.pushState({ search: searchValue }, '', `index.html?search=${searchValue}`);
+  });
+
+
+  // Set the search input value
+  //document.querySelector('.search-bar').value = searchValue || '';
+
+  // Filter products on search button click
+  document.querySelector('.search-button').addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    const searchValue = document.querySelector('.search-bar').value;
+    filterProducts(searchValue);
+
+    window.history.pushState({ search: searchValue }, '', `index.html?search=${searchValue}`);
+  }); 
+
+
+  // Initial filter based on the search query parameter
+  if (searchValue) {
+    filterProducts(searchValue);
+  }
+
+  // Scroll to the first visible product
+  const products = document.querySelectorAll('.product-container');
+
+  let firstVisibleProduct = null;
+  products.forEach(product => {
+    if (window.getComputedStyle(product).display !== 'none') {
+      firstVisibleProduct = product;
+      return;
+    }
+  });
+
+  if (firstVisibleProduct) {
+    console.log(firstVisibleProduct);
+    firstVisibleProduct.scrollIntoView({ behavior: "smooth", block: "start" });
+  } 
+});
+
+
 	
-	// 	document.querySelector('.search-button').addEventListener('click', () => {
-	// 		const searchValue = document.querySelector('.search-bar').value;
-			
-	// 		document.querySelectorAll('.js-products-grid').forEach(product => {
-	// 			const productName = product.dataset.name;
-	// 			if (productName && productName.includes(searchValue)) {
-	// 				product.style.display = 'block';
-	// 			} else {
-	// 				product.style.display = 'none';
-	// 			}
-	// 		});
-	// 	});
-	
-	// 	// Initial filter based on the search query parameter
-	// 	if (searchValue) {
-	// 		document.querySelectorAll('.js-products-grid').forEach(product => {
-	// 			const productName = product.dataset.name;
-	// 			if (productName && !productName.includes(searchValue)) {
-	// 				product.style.display = 'none';
-	// 			}
-	// 		});
-	// 	}
-	// });
 

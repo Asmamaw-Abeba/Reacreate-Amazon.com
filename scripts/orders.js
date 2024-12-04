@@ -89,7 +89,7 @@ async function loadOrderPage() {
       
       if (floatDay === now + 1) {
         now++;
-        counter++;
+        ++counter;
         deliveryDate = today.add(deliveryOption.deliveryDate - counter, 'days');
       } else {
         deliveryDate = today.add(deliveryOption.deliveryDate, 'days');
