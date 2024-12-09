@@ -73,15 +73,21 @@ export function renderProductsGrid() {
 
 
 	//console.log(productHTML);
-	document.querySelector('.js-products-grid').innerHTML = productHTML;
+	let gridElement = document.querySelector('.js-products-grid');
+	if (gridElement) {
+		gridElement.innerHTML = productHTML;
+	}
+	//document.querySelector('.js-products-grid').innerHTML = productHTML;
 
 	function updateCartQuantity() {
 		let cartQuantity = 0;
 		cart.forEach((cartItem) => {
 				cartQuantity += cartItem.quantity;
 		});
-		document.querySelector('.js-cart-quantity')
-		.innerHTML = cartQuantity; 
+		let cartElement = document.querySelector('.js-cart-quantity');
+		if (cartElement) {
+			cartElement.innerHTML = cartQuantity; 
+		}
 	}
 	updateCartQuantity();
 
@@ -167,18 +173,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Filter products on search input change
-  searchInput.addEventListener('input', () => {
-    const searchValue = searchInput.value.trim();//The .trim() method in JavaScript is used to remove whitespace from both ends of a string.
-    filterProducts(searchValue);
-    //window.history.pushState({ search: searchValue }, '', `index.html?search=${searchValue}`);
-  });
+	if (searchInput) {
+		searchInput.addEventListener('input', () => {
+			const searchValue = searchInput.value.trim();//The .trim() method in JavaScript is used to remove whitespace from both ends of a string.
+			filterProducts(searchValue);
+			//window.history.pushState({ search: searchValue }, '', `index.html?search=${searchValue}`);
+		});
+	}
+  
 
 
   // Set the search input value
   //document.querySelector('.search-bar').value = searchValue || '';
 
   // Filter products on search button click
-  document.querySelector('.search-button').addEventListener('click', (event) => {
+ let searchButton = document.querySelector('.search-button');
+ if (searchButton) {
+	searchButton.addEventListener('click', (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
 
     const searchValue = document.querySelector('.search-bar').value;
@@ -186,6 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.history.pushState({ search: searchValue }, '', `index.html?search=${searchValue}`);
   }); 
+ }
+ 
 
 
   // Initial filter based on the search query parameter

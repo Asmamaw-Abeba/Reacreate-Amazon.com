@@ -9,11 +9,25 @@ export function renderpaymentSummary () {
   let productPriceCents = 0;
   let shippingPriceCents = 0;
 
+//   if (cart && Array.isArray(cart)) {
+//     data.forEach(item => {
+//         if (item && item.priceCents) {
+//             // Access item.priceCents safely
+//             console.log(item.priceCents);
+//         }
+//     });
+// }
+// }
+
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
     // getting product details
     const matchingProduct = getProductDetail(productId);
-    productPriceCents += matchingProduct.priceCents * cartItem.quantity;
+    if (cartItem && cartItem.priceCents) {
+      productPriceCents += matchingProduct.priceCents * cartItem.quantity;
+      console.log(cartItem.priceCents);
+    }
+    //productPriceCents += matchingProduct.priceCents * cartItem.quantity;
 
     const deliveryOptionId = cartItem.deliveryOptionId;
 

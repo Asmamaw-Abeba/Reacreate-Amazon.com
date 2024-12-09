@@ -29,28 +29,4 @@ async function loadPage() {
 loadPage();
 
 
-// // use  promise for waiting
-// Promise.all([
-//   loadProductsFetch(),
-//   new Promise((resolve) => { 
-//     loadCart(() => {
-//       resolve();
-//     });
-//   })
-
-// ]).then((values) => {
-//   console.log(values);
-//   renderOrderSummary();
-//   renderpaymentSummary();
-// });
-
-
-
-/*
-loadProducts(() => {
-  renderOrderSummary();
-  renderpaymentSummary();
-});
-*/
-
 

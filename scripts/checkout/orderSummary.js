@@ -24,6 +24,7 @@ import { renderpaymentSummary } from './paymentSummary.js';
       const productId = cartItem.productId;
       //getting product details
       const matchingProduct = getProductDetail(productId);
+      console.log(matchingProduct)
       // To check the existance
       if (!matchingProduct || !matchingProduct.id) {
           console.error('Matching product or ID is undefined:', matchingProduct);
